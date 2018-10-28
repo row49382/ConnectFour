@@ -14,6 +14,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
 
 /**
@@ -35,6 +37,12 @@ public class Main extends Application implements EventHandler<ActionEvent>, Obse
 	
 	/** Resets the board */
 	private Button resetButton;
+	
+	/** Undos the last turn */
+	private Button undoButton;
+	
+	/** Holds the buttons */
+	private HBox buttonBox;
 	
 	/** Holds the value of the clicks on the makeMove button */
 	private int clicksOnMakeMove;
@@ -81,10 +89,16 @@ public class Main extends Application implements EventHandler<ActionEvent>, Obse
 		mp.setHgap(20);
 		
 		this.fillBoard(mp);
-				
-		this.resetButton = new Button ("Restart");
+		
+		this.resetButton = new Button("Restart");
 		this.resetButton.setOnAction(this);
-		mp.add(resetButton, 1, 3);
+		
+		this.undoButton = new Button("Undo");
+		this.undoButton.setDisable(true);
+		this.undoButton.setOnAction(this);
+		
+		this.buttonBox = new HBox(10, this.resetButton, this.undoButton);
+		mp.add(buttonBox, 1, 3);
 				
 		this.banner = new Label(RED_TURN_TEXT);
 		mp.add(this.banner, 1, 1);
@@ -143,7 +157,6 @@ public class Main extends Application implements EventHandler<ActionEvent>, Obse
 	
 	/**
 	 * Updates the gameboard after the observer is notified
-	 * @param column
 	 */
 	private void updateBoard()
 	{
@@ -170,6 +183,7 @@ public class Main extends Application implements EventHandler<ActionEvent>, Obse
 				guiBoard[i][j].setDisable(true);
 			}
 		}
+		this.undoButton.setDisable(true);
 	}
 	
 	/**
@@ -219,21 +233,43 @@ public class Main extends Application implements EventHandler<ActionEvent>, Obse
 	@Override
 	public void handle(ActionEvent event) 
 	{	
-		if (event.getSource() == resetButton)
+		if (event.getSource() == this.resetButton)
 		{
 			this.game.reset();
 		}		
+		else if (event.getSource() == this.undoButton)
+		{
+			this.game.undoMove();
+		}
 	}
 
 	@Override
 	public void update(Observable o, Object arg) 
 	{
-		if (arg != null)
+		if (arg != null && arg instanceof Integer)
 		{
 			// arg is only not null when a move has been made
 			// and passes the column value of the recently made move
 			this.currentColumn = (int)arg;	
+			this.undoButton.setDisable(false);
 			this.updateBoard();		
+		}
+		else if (arg != null && (arg.toString()).equals("Undo"))
+		{
+			this.currentColumn = this.game.getPreviousColumn();
+			this.guiBoard[this.game.getColumnSpaces()[this.currentColumn]][this.currentColumn].setDefaultStyle();
+			this.undoButton.setDisable(true);
+			
+			if (this.clicksOnMakeMove == 0 || this.clicksOnMakeMove % 2 == 0) 
+			{	
+				this.banner.setText(BLACK_TURN_TEXT);
+			}	
+			else
+			{	
+				this.banner.setText(RED_TURN_TEXT);
+			}
+			
+			this.clicksOnMakeMove--;
 		}
 		else
 		{

@@ -18,6 +18,7 @@ import tests.support.ConnectFourFactoryImpl;
  */
 public class ConnectFourTests 
 {	
+	/** factory instance for the class that's used to create ConnectFour games in different states */
 	private static ConnectFourFactory connectFourFactory;
 	
 	@BeforeAll
@@ -84,7 +85,6 @@ public class ConnectFourTests
 					isReset = false;
 					break;
 				}
-					
 			}
 			
 			if (!isReset)
@@ -97,9 +97,19 @@ public class ConnectFourTests
 	}
 	
 	@Test
+	public void testUndoMoveBoard() throws Exception
+	{
+		ConnectFour testGame = ConnectFourTests.connectFourFactory.getConnectFourEntity(ConnectFourGameboardState.Full);
+		
+		testGame.undoMove();
+		
+		assertTrue(testGame.getGameBoard()[testGame.getColumnSpaces()[testGame.getPreviousColumn()]][testGame.getPreviousColumn()] == testGame.getEmptyToken(),
+					"undo did not remove the last value");
+	}
+	
+	@Test
 	public void testInvalidColumnMove() throws Exception
 	{
-		
 		ConnectFour testGame = ConnectFourTests.connectFourFactory.getConnectFourEntity(ConnectFourGameboardState.Full);
 		
 		assertThrows(Exception.class, () -> 
@@ -111,6 +121,30 @@ public class ConnectFourTests
 		{
 			testGame.makeMove(testGame.getGameBoard().length);
 		},  "game didn't catch illegal move");
+	}
+	
+	@Test
+	public void testUndoMoveCheckIsFirstPlayer() throws Exception
+	{
+		ConnectFour testGame = ConnectFourTests.connectFourFactory.getConnectFourEntity(ConnectFourGameboardState.Full);
+		boolean currentPlayerState = testGame.isFirstPlayer();
+		
+		testGame.undoMove();
+		boolean previousPlayerState = testGame.isFirstPlayer();
+		
+		assertFalse(currentPlayerState == previousPlayerState, "game didn't rollback player status on undo");	
+	}
+	
+	@Test
+	public void testUndoMoveRevertColumnSpaceDecrement() throws Exception
+	{
+		ConnectFour testGame = ConnectFourTests.connectFourFactory.getConnectFourEntity(ConnectFourGameboardState.Full);
+		int currentPlayerState = testGame.getColumnSpaces()[testGame.getPreviousColumn()];
+		
+		testGame.undoMove();
+		int previousPlayerState = testGame.getColumnSpaces()[testGame.getPreviousColumn()];
+		
+		assertFalse(currentPlayerState == previousPlayerState, "game didn't rollback column depth on undo");
 	}
 	
 	@Test

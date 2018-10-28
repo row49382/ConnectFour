@@ -117,6 +117,11 @@ public class ConnectFour extends Observable
 	{
 		return this.gameBoard;
 	}
+
+	public int getPreviousColumn() 
+	{
+		return this.previousColumn;
+	}	
 	
 	/**
 	 * Checks to see if the token connects four diagonally
@@ -351,6 +356,20 @@ public class ConnectFour extends Observable
 	}
 	
 	/**
+	 * Undos the most recent move
+	 */
+	public void undoMove()
+	{
+		this.gameBoard[this.getColumnSpaces()[this.previousColumn] + 1][this.previousColumn] = this.getEmptyToken();
+		this.getColumnSpaces()[this.previousColumn]++;
+		this.previousMove = this.getEmptyToken();
+		this.isFirstPlayer = !this.isFirstPlayer;
+		
+		setChanged();
+		notifyObservers("Undo");
+	}
+	
+	/**
 	 * to String method
 	 */
 	public String toString()
@@ -365,5 +384,5 @@ public class ConnectFour extends Observable
 			s += "\n";
 		}
 		return s;
-	}	
+	}
 }
