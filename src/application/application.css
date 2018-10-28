@@ -1,0 +1,16 @@
+.circleButton {
+	-fx-background-color: Yellow;
+	-fx-background-radius: 5em;
+    -fx-min-width: 60px;
+    -fx-min-height: 60px;
+    -fx-max-width: 60px;
+    -fx-max-height: 60px;	
+}
+
+.circleButtonRedClick {
+	-fx-background-color: Red;
+}
+
+.circleButtonBlackClick {
+	-fx-background-color: Black;
+}
