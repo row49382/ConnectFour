@@ -30,7 +30,8 @@ public class ConnectFourTests
 	@Test
 	public void testUpperLeftLowerRightDiagonalWin() throws Exception
 	{
-		ConnectFour testGame = ConnectFourTests.connectFourFactory.getConnectFourEntity(ConnectFourGameboardState.UpperLeftLowerRightDiagonalWin);
+		ConnectFour testGame = ConnectFourTests.connectFourFactory.getConnectFourEntity(
+									ConnectFourGameboardState.UpperLeftLowerRightDiagonalWin);
 		
 		assertTrue(testGame.isDiagonal(), "Diagonal win was not detected");
 	}
@@ -38,7 +39,8 @@ public class ConnectFourTests
 	@Test
 	public void testLowerLeftUpperRightDiagonalWin() throws Exception
 	{
-		ConnectFour testGame = ConnectFourTests.connectFourFactory.getConnectFourEntity(ConnectFourGameboardState.LowerLeftUpperRightDiagonalWin);
+		ConnectFour testGame = ConnectFourTests.connectFourFactory.getConnectFourEntity(
+									ConnectFourGameboardState.LowerLeftUpperRightDiagonalWin);
 		
 		assertTrue(testGame.isDiagonal(), "Diagonal win was not detected");
 	}
@@ -46,7 +48,8 @@ public class ConnectFourTests
 	@Test
 	public void testVerticalWin() throws Exception
 	{
-		ConnectFour testGame = ConnectFourTests.connectFourFactory.getConnectFourEntity(ConnectFourGameboardState.VerticalWin);
+		ConnectFour testGame = ConnectFourTests.connectFourFactory.getConnectFourEntity(
+									ConnectFourGameboardState.VerticalWin);
 
 		assertTrue(testGame.isVertical(), "Vertical win was not detected");
 	}
@@ -54,7 +57,8 @@ public class ConnectFourTests
 	@Test
 	public void testHorizontalWin() throws Exception
 	{
-		ConnectFour testGame = ConnectFourTests.connectFourFactory.getConnectFourEntity(ConnectFourGameboardState.HorizonalWin);
+		ConnectFour testGame = ConnectFourTests.connectFourFactory.getConnectFourEntity(
+									ConnectFourGameboardState.HorizonalWin);
 		
 		assertTrue(testGame.isHorizontal(), "Horizontal win was not detected");
 	}
@@ -62,7 +66,8 @@ public class ConnectFourTests
 	@Test
 	public void testTieGame() throws Exception
 	{
-		ConnectFour testGame = ConnectFourTests.connectFourFactory.getConnectFourEntity(ConnectFourGameboardState.Full);
+		ConnectFour testGame = ConnectFourTests.connectFourFactory.getConnectFourEntity(
+									ConnectFourGameboardState.Full);
 		
 		assertTrue(testGame.isTie());
 	}
@@ -70,7 +75,9 @@ public class ConnectFourTests
 	@Test
 	public void testResetGame() throws Exception
 	{
-		ConnectFour testGame = ConnectFourTests.connectFourFactory.getConnectFourEntity(ConnectFourGameboardState.Full);
+		ConnectFour testGame = ConnectFourTests.connectFourFactory.getConnectFourEntity(
+									ConnectFourGameboardState.Full);
+		
 		testGame.reset();
 		
 		boolean isReset = true;
@@ -99,7 +106,8 @@ public class ConnectFourTests
 	@Test
 	public void testUndoMoveBoard() throws Exception
 	{
-		ConnectFour testGame = ConnectFourTests.connectFourFactory.getConnectFourEntity(ConnectFourGameboardState.Full);
+		ConnectFour testGame = ConnectFourTests.connectFourFactory.getConnectFourEntity(
+									ConnectFourGameboardState.Full);
 		
 		testGame.undoMove();
 		
@@ -110,7 +118,8 @@ public class ConnectFourTests
 	@Test
 	public void testInvalidColumnMove() throws Exception
 	{
-		ConnectFour testGame = ConnectFourTests.connectFourFactory.getConnectFourEntity(ConnectFourGameboardState.Full);
+		ConnectFour testGame = ConnectFourTests.connectFourFactory.getConnectFourEntity(
+									ConnectFourGameboardState.Full);
 		
 		assertThrows(Exception.class, () -> 
 		{
@@ -126,7 +135,9 @@ public class ConnectFourTests
 	@Test
 	public void testUndoMoveCheckIsFirstPlayer() throws Exception
 	{
-		ConnectFour testGame = ConnectFourTests.connectFourFactory.getConnectFourEntity(ConnectFourGameboardState.Full);
+		ConnectFour testGame = ConnectFourTests.connectFourFactory.getConnectFourEntity(
+									ConnectFourGameboardState.Full);
+		
 		boolean currentPlayerState = testGame.isFirstPlayer();
 		
 		testGame.undoMove();
@@ -138,7 +149,8 @@ public class ConnectFourTests
 	@Test
 	public void testUndoMoveRevertColumnSpaceDecrement() throws Exception
 	{
-		ConnectFour testGame = ConnectFourTests.connectFourFactory.getConnectFourEntity(ConnectFourGameboardState.Full);
+		ConnectFour testGame = ConnectFourTests.connectFourFactory.getConnectFourEntity(
+									ConnectFourGameboardState.Full);
 		int currentPlayerState = testGame.getColumnSpaces()[testGame.getPreviousColumn()];
 		
 		testGame.undoMove();
@@ -150,15 +162,12 @@ public class ConnectFourTests
 	@Test
 	public void testColumnFullMove() throws Exception
 	{
-		ConnectFour testGame = ConnectFourTests.connectFourFactory.getConnectFourEntity(ConnectFourGameboardState.Full);
+		ConnectFour testGame = ConnectFourTests.connectFourFactory.getConnectFourEntity(
+									ConnectFourGameboardState.Full);
 		
 		assertThrows(Exception.class, () -> 
 		{
 			testGame.makeMove(0);
 		}, "game didn't register that column was full");
 	}
-	
-	
-	
-	
 }
