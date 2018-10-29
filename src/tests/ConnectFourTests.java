@@ -107,8 +107,8 @@ public class ConnectFourTests
 	public void testUndoMoveBoard() throws Exception
 	{
 		ConnectFour testGame = ConnectFourTests.connectFourFactory.getConnectFourEntity(
-									ConnectFourGameboardState.Full);
-		
+									ConnectFourGameboardState.Default);
+		testGame.makeMove(0);
 		testGame.undoMove();
 		
 		assertTrue(testGame.getGameBoard()[testGame.getColumnSpaces()[testGame.getPreviousColumn()]][testGame.getPreviousColumn()] == testGame.getEmptyToken(),
