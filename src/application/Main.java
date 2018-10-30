@@ -44,9 +44,6 @@ public class Main extends Application implements EventHandler<ActionEvent>, Obse
 	/** Holds the buttons */
 	private HBox buttonBox;
 	
-	/** Holds the value of the clicks on the makeMove button */
-	private int clicksOnMakeMove;
-	
 	/** Holds the value of the textfield that displays the game status */
 	private Label banner;
 	
@@ -60,7 +57,6 @@ public class Main extends Application implements EventHandler<ActionEvent>, Obse
 		this.game.addObserver(this);
 		
 		this.guiBoard = new CircleButton[6][7];
-		this.clicksOnMakeMove = 0;
 		this.currentColumn = -1;
 		
 		try 
@@ -132,20 +128,10 @@ public class Main extends Application implements EventHandler<ActionEvent>, Obse
 						errorAlert.showAndWait();
 					}
 					
-					if (this.clicksOnMakeMove == 0 || this.clicksOnMakeMove % 2 == 0) 
-					{	
-						this.banner.setText(BLACK_TURN_TEXT);
-					}	
-					else
-					{	
-						this.banner.setText(RED_TURN_TEXT);
-					}
-					
-					this.clicksOnMakeMove++;
-					
+					this.updateBoardText();
+							
 					// check if the game is over after every move
 					this.checkGameOver();
-							
 				});
 			
 				guiBoard[i][j] = button;
@@ -167,6 +153,22 @@ public class Main extends Application implements EventHandler<ActionEvent>, Obse
 		else
 		{
 			this.guiBoard[this.game.getColumnSpaces()[currentColumn] + 1][currentColumn].setColor("Red");
+		}
+	}
+	
+	/**
+	 * Sets the board text every move based on if it's the first
+	 * players turn 
+	 */
+	private void updateBoardText()
+	{
+		if (!this.game.isFirstPlayer()) 
+		{	
+			this.banner.setText(BLACK_TURN_TEXT);
+		}	
+		else
+		{	
+			this.banner.setText(RED_TURN_TEXT);
 		}
 	}
 	
@@ -246,36 +248,28 @@ public class Main extends Application implements EventHandler<ActionEvent>, Obse
 	@Override
 	public void update(Observable o, Object arg) 
 	{
-		if (arg != null && arg instanceof Integer)
+		if (arg != null )
 		{
-			// arg is only not null when a move has been made
-			// and passes the column value of the recently made move
-			this.currentColumn = (int)arg;	
-			this.undoButton.setDisable(false);
-			this.updateBoard();		
-		}
-		else if (arg != null && (arg.toString()).equals("Undo"))
-		{
-			this.currentColumn = this.game.getPreviousColumn();
-			this.guiBoard[this.game.getColumnSpaces()[this.currentColumn]][this.currentColumn].setDefaultStyle();
-			this.undoButton.setDisable(true);
-			
-			if (this.clicksOnMakeMove == 0 || this.clicksOnMakeMove % 2 == 0) 
-			{	
-				this.banner.setText(BLACK_TURN_TEXT);
-			}	
-			else
-			{	
-				this.banner.setText(RED_TURN_TEXT);
+			if (arg instanceof Integer)
+			{
+				// passes the column value of the recently made move
+				this.currentColumn = (int)arg;	
+				this.undoButton.setDisable(false);
+				this.updateBoard();	
 			}
-			
-			this.clicksOnMakeMove--;
+			else if ((arg.toString()).equals("Undo"))
+			{
+				this.currentColumn = this.game.getPreviousColumn();
+				this.guiBoard[this.game.getColumnSpaces()[this.currentColumn]][this.currentColumn].setDefaultStyle();
+				this.undoButton.setDisable(true);
+				
+				this.updateBoardText();
+			}
 		}
 		else
 		{
 			// reset was clicked and the board needs to be reset
 			this.resetBoard();
-			clicksOnMakeMove = 0;
 			currentColumn = -1;
 			banner.setText(RED_TURN_TEXT);
 		}
