@@ -1,8 +1,7 @@
 package application.models;
 
-import java.util.ArrayList;
 import java.util.Observable;
-import java.util.Scanner;
+import java.util.Stack;
 
 /**
  * This class creates the gameboard
@@ -33,7 +32,7 @@ public class ConnectFour extends Observable
 	private String previousMove;
 	
 	/** Holds the column value of where the previous move was */
-	private int previousColumn;
+	private Stack<Integer> previousColumn;
 	
 	/**
 	 * Constructor class
@@ -47,7 +46,7 @@ public class ConnectFour extends Observable
 		this.setBlackToken(newBlackToken);
 		this.setEmptyToken(newEmptyToken);
 		this.previousMove = this.getEmptyToken();
-		this.previousColumn = -1;
+		this.previousColumn = new Stack<>();
 		
 		// makes the board
 		for (int i = 0; i < gameBoard.length; i++)
@@ -95,6 +94,10 @@ public class ConnectFour extends Observable
 		return this.emptyToken;
 	}
 	
+	/**
+	 * gets the column spaces remaining
+	 * @return The column spaces remaining
+	 */
 	public int[] getColumnSpaces()
 	{
 		return this.columnSpaces;
@@ -108,17 +111,29 @@ public class ConnectFour extends Observable
 		this.isFirstPlayer = true;
 	}
 	
+	/**
+	 * gets the first player
+	 * @return the isFirstPlayer value
+	 */
 	public boolean isFirstPlayer()
 	{
 		return this.isFirstPlayer;
 	}
 	
+	/**
+	 * gets the gameboard
+	 * @return the gameboard
+	 */
 	public String[][] getGameBoard()
 	{
 		return this.gameBoard;
 	}
 
-	public int getPreviousColumn() 
+	/**
+	 * the stack of previous column entries
+	 * @return the stack of previous column entries
+	 */
+	public Stack<Integer> getPreviousColumn() 
 	{
 		return this.previousColumn;
 	}	
@@ -143,8 +158,8 @@ public class ConnectFour extends Observable
 		int tokenCounter = 1;
 		
 		// check the upper left
-		int upperLeft = columnSpaces[this.previousColumn];
-		for (int i = this.previousColumn - 1; i >= 0 && upperLeft >= 0 && tokenCounter < 4; i--, upperLeft--)
+		int upperLeft = columnSpaces[this.previousColumn.peek()];
+		for (int i = this.previousColumn.peek() - 1; i >= 0 && upperLeft >= 0 && tokenCounter < 4; i--, upperLeft--)
 		{
 			if (this.previousMove.compareTo(gameBoard[upperLeft][i]) != 0)
 			{
@@ -156,8 +171,8 @@ public class ConnectFour extends Observable
 		
 		// offset of two because the column spaces have already been adjusted after the move was made. This will
 		// start the search one token deeper in the stack than the last move		
-		int lowerRight = columnSpaces[this.previousColumn] + 2;
-		for (int i = this.previousColumn + 1; i < gameBoard[0].length && lowerRight < gameBoard.length && tokenCounter < 4; i++, lowerRight++)
+		int lowerRight = columnSpaces[this.previousColumn.peek()] + 2;
+		for (int i = this.previousColumn.peek() + 1; i < gameBoard[0].length && lowerRight < gameBoard.length && tokenCounter < 4; i++, lowerRight++)
 		{
 			if (this.previousMove.compareTo(gameBoard[lowerRight][i]) != 0)
 			{
@@ -181,8 +196,8 @@ public class ConnectFour extends Observable
 	{
 		int tokenCounter = 1;
 		
-		int upperRight = columnSpaces[this.previousColumn];
-		for (int i = this.previousColumn + 1; i < gameBoard[0].length && upperRight >= 0 && tokenCounter < 4; i++, upperRight--)
+		int upperRight = columnSpaces[this.previousColumn.peek()];
+		for (int i = this.previousColumn.peek() + 1; i < gameBoard[0].length && upperRight >= 0 && tokenCounter < 4; i++, upperRight--)
 		{
 			if (this.previousMove.compareTo(gameBoard[upperRight][i]) != 0)
 			{
@@ -193,9 +208,9 @@ public class ConnectFour extends Observable
 		}
 		
 		// offset of two because the column spaces have already been adjusted after the move was made. This will
-		// start the search one token deeper in the stack than the last move
-		int lowerLeft = columnSpaces[this.previousColumn] + 2;
-		for (int i = this.previousColumn - 1; i >= 0 && lowerLeft < gameBoard.length && tokenCounter < 4; i--, lowerLeft++)
+		// start the search one token deeper in the board than the last move
+		int lowerLeft = columnSpaces[this.previousColumn.peek()] + 2;
+		for (int i = this.previousColumn.peek() - 1; i >= 0 && lowerLeft < gameBoard.length && tokenCounter < 4; i--, lowerLeft++)
 		{
 			if (this.previousMove.compareTo(gameBoard[lowerLeft][i]) != 0)
 			{
@@ -219,9 +234,9 @@ public class ConnectFour extends Observable
 		int tokenCounter = 0;
 		
 		// check right side for token matches
-		for (int i = this.previousColumn + 1; i < gameBoard[0].length && tokenCounter < 4; i++)
+		for (int i = this.previousColumn.peek() + 1; i < gameBoard[0].length && tokenCounter < 4; i++)
 		{
-			if (this.previousMove.compareTo(gameBoard[columnSpaces[this.previousColumn] + 1][i]) != 0)
+			if (this.previousMove.compareTo(gameBoard[columnSpaces[this.previousColumn.peek()] + 1][i]) != 0)
 			{
 				break;
 			}
@@ -230,9 +245,9 @@ public class ConnectFour extends Observable
 		}
 		
 		// check left side for token matches
-		for (int i = this.previousColumn; i >= 0 && tokenCounter < 4; i--)
+		for (int i = this.previousColumn.peek(); i >= 0 && tokenCounter < 4; i--)
 		{
-			if (this.previousMove.compareTo(gameBoard[columnSpaces[this.previousColumn] + 1][i]) != 0)
+			if (this.previousMove.compareTo(gameBoard[columnSpaces[this.previousColumn.peek()] + 1][i]) != 0)
 			{
 				break;
 			}
@@ -250,9 +265,10 @@ public class ConnectFour extends Observable
 	public boolean isVertical()
 	{ 
 		int tokenCounter = 0;
-		for (int i = columnSpaces[this.previousColumn] + 1; i < gameBoard.length && tokenCounter < 4; i++)
+		
+		for (int i = columnSpaces[this.previousColumn.peek()] + 1; i < gameBoard.length && tokenCounter < 4; i++)
 		{
-			if (this.previousMove.compareTo(gameBoard[i][this.previousColumn]) != 0)
+			if (this.previousMove.compareTo(gameBoard[i][this.previousColumn.peek()]) != 0)
 			{
 				break;
 			}
@@ -304,8 +320,7 @@ public class ConnectFour extends Observable
 		{
 			throw new Exception("Invalid column value, please try again");
 		}
-		
-		if (columnSpaces[column] < 0  || columnSpaces[column] > this.gameBoard.length)
+		else if (columnSpaces[column] < 0  || columnSpaces[column] > this.gameBoard.length)
 		{
 			throw new Exception("Column is full, please try again.");
 		}
@@ -322,11 +337,11 @@ public class ConnectFour extends Observable
 		}
 		
 		this.previousMove = gameBoard[columnSpaces[column]][column];
-		this.previousColumn = column;
+		this.previousColumn.push(column);
 		columnSpaces[column]--;
 		
 		setChanged();
-		notifyObservers(column);
+		notifyObservers("MakeMove");
 	}
 	
 	/**
@@ -348,7 +363,7 @@ public class ConnectFour extends Observable
 		}
 		
 		this.previousMove = this.getEmptyToken();
-		this.previousColumn = -1;
+		this.previousColumn.clear();
 		this.isFirstPlayer = true;
 		
 		setChanged();
@@ -360,13 +375,15 @@ public class ConnectFour extends Observable
 	 */
 	public void undoMove()
 	{
-		this.gameBoard[this.getColumnSpaces()[this.previousColumn] + 1][this.previousColumn] = this.getEmptyToken();
-		this.getColumnSpaces()[this.previousColumn]++;
+		int currentColumn = this.previousColumn.peek();
+		this.gameBoard[this.getColumnSpaces()[this.previousColumn.peek()] + 1][this.previousColumn.peek()] = this.getEmptyToken();
+		this.getColumnSpaces()[this.previousColumn.peek()]++;
+		this.previousColumn.pop();
 		this.previousMove = this.getEmptyToken();
 		this.isFirstPlayer = !this.isFirstPlayer;
 		
 		setChanged();
-		notifyObservers("Undo");
+		notifyObservers(currentColumn);
 	}
 	
 	/**

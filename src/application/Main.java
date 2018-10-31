@@ -32,7 +32,7 @@ public class Main extends Application implements EventHandler<ActionEvent>, Obse
 	/** Holds the pointer to the game board */
 	private ConnectFour game;
 	
-	/** Prints out the graphic board to the gui */
+	/** The graphic game board of the gui */
 	private CircleButton[][] guiBoard;
 	
 	/** Resets the board */
@@ -250,18 +250,22 @@ public class Main extends Application implements EventHandler<ActionEvent>, Obse
 	{
 		if (arg != null )
 		{
-			if (arg instanceof Integer)
+			if ((arg.toString()).equals("MakeMove"))
 			{
 				// passes the column value of the recently made move
-				this.currentColumn = (int)arg;	
+				this.currentColumn = this.game.getPreviousColumn().peek();	
 				this.undoButton.setDisable(false);
 				this.updateBoard();	
 			}
-			else if ((arg.toString()).equals("Undo"))
+			else if (arg instanceof Integer)
 			{
-				this.currentColumn = this.game.getPreviousColumn();
+				this.currentColumn = (int)arg;
 				this.guiBoard[this.game.getColumnSpaces()[this.currentColumn]][this.currentColumn].setDefaultStyle();
-				this.undoButton.setDisable(true);
+				
+				if (this.game.getPreviousColumn().isEmpty())
+				{
+					this.undoButton.setDisable(true);
+				}
 				
 				this.updateBoardText();
 			}

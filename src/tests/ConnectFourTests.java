@@ -69,7 +69,7 @@ public class ConnectFourTests
 		ConnectFour testGame = ConnectFourTests.connectFourFactory.getConnectFourEntity(
 									ConnectFourGameboardState.Full);
 		
-		assertTrue(testGame.isTie());
+		assertTrue(testGame.isTie(), "the game did not identify a tie game");
 	}
 	
 	@Test
@@ -87,7 +87,7 @@ public class ConnectFourTests
 		{
 			for (int j = 0; j < testGame.getGameBoard()[i].length; j++)
 			{
-				if (testGame.getGameBoard()[i][j] != "-")
+				if (testGame.getGameBoard()[i][j] != testGame.getEmptyToken())
 				{
 					isReset = false;
 					break;
@@ -100,7 +100,7 @@ public class ConnectFourTests
 			}
 		}
 		
-		assertTrue(isReset);
+		assertTrue(isReset && testGame.getPreviousColumn().isEmpty(), "the game did not reset");
 	}
 	
 	@Test
@@ -109,9 +109,11 @@ public class ConnectFourTests
 		ConnectFour testGame = ConnectFourTests.connectFourFactory.getConnectFourEntity(
 									ConnectFourGameboardState.Default);
 		testGame.makeMove(0);
+		int currentcolumn = testGame.getPreviousColumn().peek();
+		
 		testGame.undoMove();
 		
-		assertTrue(testGame.getGameBoard()[testGame.getColumnSpaces()[testGame.getPreviousColumn()]][testGame.getPreviousColumn()] == testGame.getEmptyToken(),
+		assertTrue(testGame.getGameBoard()[testGame.getColumnSpaces()[currentcolumn]][currentcolumn] == testGame.getEmptyToken(),
 					"undo did not remove the last value");
 	}
 	
@@ -151,12 +153,47 @@ public class ConnectFourTests
 	{
 		ConnectFour testGame = ConnectFourTests.connectFourFactory.getConnectFourEntity(
 									ConnectFourGameboardState.Full);
-		int currentPlayerState = testGame.getColumnSpaces()[testGame.getPreviousColumn()];
+		
+		int currentColumn = testGame.getPreviousColumn().peek();
+		int currentPlayerState = testGame.getColumnSpaces()[currentColumn];
 		
 		testGame.undoMove();
-		int previousPlayerState = testGame.getColumnSpaces()[testGame.getPreviousColumn()];
+		int previousPlayerState = testGame.getColumnSpaces()[currentColumn];
 		
 		assertFalse(currentPlayerState == previousPlayerState, "game didn't rollback column depth on undo");
+	}
+	
+	@Test
+	public void testUndoAllMoves() throws Exception
+	{
+		ConnectFour testGame = ConnectFourTests.connectFourFactory.getConnectFourEntity(
+									ConnectFourGameboardState.Full);
+		
+		while (!testGame.getPreviousColumn().isEmpty())
+		{
+			testGame.undoMove();
+		}
+		
+		boolean isUndoAll = true;
+		// iterates through board to see if all spaces were reset
+		for (int i = 0; i < testGame.getGameBoard().length; i++)
+		{
+			for (int j = 0; j < testGame.getGameBoard()[i].length; j++)
+			{
+				if (testGame.getGameBoard()[i][j] != testGame.getEmptyToken())
+				{
+					isUndoAll = false;
+					break;
+				}
+			}
+
+			if (!isUndoAll)
+			{
+				break;
+			}
+		}
+		
+		assertTrue(isUndoAll, "game did not undo all moves");
 	}
 	
 	@Test
