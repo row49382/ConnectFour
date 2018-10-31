@@ -134,8 +134,8 @@ public class Main extends Application implements EventHandler<ActionEvent>, Obse
 					this.checkGameOver();
 				});
 			
-				guiBoard[i][j] = button;
-				boardPane.add(guiBoard[i][j], j, i);
+				this.guiBoard[i][j] = button;
+				boardPane.add(this.guiBoard[i][j], j, i);
 			}		
 		}	
 		mp.add(boardPane, 1, 2);
@@ -146,13 +146,13 @@ public class Main extends Application implements EventHandler<ActionEvent>, Obse
 	 */
 	private void updateBoard()
 	{
-		if (game.isFirstPlayer())
+		if (this.game.isFirstPlayer())
 		{
-			this.guiBoard[this.game.getColumnSpaces()[currentColumn] + 1][currentColumn].setColor("Black");
+			this.guiBoard[this.game.getColumnSpaces()[this.currentColumn] + 1][this.currentColumn].setColor("Black");
 		}
 		else
 		{
-			this.guiBoard[this.game.getColumnSpaces()[currentColumn] + 1][currentColumn].setColor("Red");
+			this.guiBoard[this.game.getColumnSpaces()[this.currentColumn] + 1][this.currentColumn].setColor("Red");
 		}
 	}
 	
@@ -178,11 +178,11 @@ public class Main extends Application implements EventHandler<ActionEvent>, Obse
 	 */
 	private void lockBoard()
 	{
-		for (int i = 0; i < guiBoard.length; i++)
+		for (int i = 0; i < this.guiBoard.length; i++)
 		{
-			for (int j = 0; j < guiBoard[i].length; j++)
+			for (int j = 0; j < this.guiBoard[i].length; j++)
 			{
-				guiBoard[i][j].setDisable(true);
+				this.guiBoard[i][j].setDisable(true);
 			}
 		}
 		this.undoButton.setDisable(true);
@@ -197,8 +197,8 @@ public class Main extends Application implements EventHandler<ActionEvent>, Obse
 		{
 			for (int j = 0; j < this.guiBoard[i].length; j++)
 			{
-				guiBoard[i][j].setDefaultStyle();
-				guiBoard[i][j].setDisable(false);
+				this.guiBoard[i][j].setDefaultStyle();
+				this.guiBoard[i][j].setDisable(false);
 			}
 		}
 	}
@@ -212,11 +212,11 @@ public class Main extends Application implements EventHandler<ActionEvent>, Obse
 		{
 			StringBuilder endOfGameText = new StringBuilder(20);
 			
-			if (game.isTie())
+			if (this.game.isTie())
 			{
 				endOfGameText.append("The game is a tie. ");
 			}
-			else if (game.isFirstPlayer())
+			else if (this.game.isFirstPlayer())
 			{
 				endOfGameText.append("The winner is BLACK! ");
 			}
@@ -226,7 +226,7 @@ public class Main extends Application implements EventHandler<ActionEvent>, Obse
 			}
 			
 			endOfGameText.append("Click restart to play again..");
-			banner.setText(endOfGameText.toString());
+			this.banner.setText(endOfGameText.toString());
 			
 			this.lockBoard();
 		}
@@ -248,7 +248,7 @@ public class Main extends Application implements EventHandler<ActionEvent>, Obse
 	@Override
 	public void update(Observable o, Object arg) 
 	{
-		if (arg != null )
+		if (arg != null)
 		{
 			if ((arg.toString()).equals("MakeMove"))
 			{
@@ -275,7 +275,7 @@ public class Main extends Application implements EventHandler<ActionEvent>, Obse
 			// reset was clicked and the board needs to be reset
 			this.resetBoard();
 			currentColumn = -1;
-			banner.setText(RED_TURN_TEXT);
+			this.banner.setText(RED_TURN_TEXT);
 		}
 	}
 	
