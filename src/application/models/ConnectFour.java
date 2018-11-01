@@ -10,10 +10,10 @@ import java.util.Stack;
  */
 public class ConnectFour extends Observable
 {
+	// constant variables for the gameboard length and depth 
 	private final int GAME_BOARD_DEPTH = 6;
 	private final int GAME_BOARD_LENGTH = 7;
 	private final int COLUMN_DEPTH = 5;
-	
 	
 	/** Holds the red token */
 	private String redToken;
@@ -46,7 +46,7 @@ public class ConnectFour extends Observable
 	{
 		this.gameBoard = new String[GAME_BOARD_DEPTH][GAME_BOARD_LENGTH];
 		
-		//initiates empty board to have spaces remaining of 5
+		
 		this.columnSpaces = new int[] {COLUMN_DEPTH, COLUMN_DEPTH, COLUMN_DEPTH, COLUMN_DEPTH, COLUMN_DEPTH, COLUMN_DEPTH, COLUMN_DEPTH}; 
 		this.setFirstPlayer();
 		this.setRedToken(newRedToken);
@@ -57,12 +57,12 @@ public class ConnectFour extends Observable
 		
 		// makes the board
 		for (int i = 0; i < this.gameBoard.length; i++)
-        {
+		{
 			for (int j = 0; j < this.gameBoard[i].length; j++)
-            {
+			{
             	this.gameBoard[i][j] = getEmptyToken();
             }
-        }
+		}
 	}
 	
 	/**
