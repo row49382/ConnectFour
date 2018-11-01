@@ -5,6 +5,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.HBox?>
 
+<!-- Game board view for the Connect Four Game -->
 <GridPane prefHeight="500.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8.0.102" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ConnectFourController" vgap="20" hgap="20">
 	<children>
 		<Label fx:id="banner" GridPane.columnIndex="1" GridPane.rowIndex="1" />

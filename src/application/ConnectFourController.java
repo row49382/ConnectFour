@@ -14,6 +14,11 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 
+/**
+ * Manages requests from the gui to the model
+ * @author Robert Wroblewski
+ *
+ */
 public class ConnectFourController implements EventHandler<ActionEvent>, Observer
 {
 	private final static String RED_TURN_TEXT = "It is RED Player's turn. Click a button to make a move.";
@@ -49,6 +54,9 @@ public class ConnectFourController implements EventHandler<ActionEvent>, Observe
 	/** Holds the integer value of the column last moved that is passed into the game */
 	private int currentColumn;
 	
+	/**
+	 * Intializes the fxml attributes for the view
+	 */
 	@FXML
 	private void initialize()
 	{
