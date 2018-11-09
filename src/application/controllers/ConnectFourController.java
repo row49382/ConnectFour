@@ -1,18 +1,19 @@
-package application;
+package application.controllers;
 
 import java.util.Observable;
 import java.util.Observer;
 
+import application.CircleButton;
 import application.models.ConnectFour;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.text.Text;
 
 /**
  * Manages requests from the gui to the model
@@ -46,7 +47,7 @@ public class ConnectFourController implements EventHandler<ActionEvent>, Observe
 	
 	/** Holds the value of the textfield that displays the game status */
 	@FXML
-	private Label banner;
+	private Text banner;
 	
 	/** Holds the pointer to the game board */
 	private ConnectFour game;
@@ -105,7 +106,6 @@ public class ConnectFourController implements EventHandler<ActionEvent>, Observe
 				this.guiBoardGP.add(this.guiBoard[i][j], j, i);
 			}		
 		}	
-		//mp.add(guiBoardGP, 1, 2);
 	}	
 	
 	/**
@@ -225,7 +225,7 @@ public class ConnectFourController implements EventHandler<ActionEvent>, Observe
 			}
 			else if (arg instanceof Integer)
 			{
-				// passes the column value of the recently made move
+				// passes the column value of the recently made move for undo
 				this.currentColumn = (int)arg;
 				this.guiBoard[this.game.getColumnSpaces()[this.currentColumn]][this.currentColumn].setDefaultStyle();
 				

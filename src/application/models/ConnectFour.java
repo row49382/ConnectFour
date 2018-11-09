@@ -46,7 +46,6 @@ public class ConnectFour extends Observable
 	{
 		this.gameBoard = new String[GAME_BOARD_DEPTH][GAME_BOARD_LENGTH];
 		
-		
 		this.columnSpaces = new int[] {COLUMN_DEPTH, COLUMN_DEPTH, COLUMN_DEPTH, COLUMN_DEPTH, COLUMN_DEPTH, COLUMN_DEPTH, COLUMN_DEPTH}; 
 		this.setFirstPlayer();
 		this.setRedToken(newRedToken);
