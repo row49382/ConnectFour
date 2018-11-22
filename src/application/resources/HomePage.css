@@ -1,0 +1,16 @@
+.root {
+	-fx-background-image: url("wooden-background.png");
+    -fx-font-size: 13pt;
+    -fx-fill: white;
+	-fx-stroke-width: 5;
+    -fx-font-family: "Calibri";
+    -fx-base: rgb(132, 145, 47);
+}
+
+.titleBanner {
+    -fx-font-size: 36pt;
+    -fx-fill: Yellow;
+	-fx-stroke: Black;
+	-fx-stroke-width: 1.5;
+	-fx-font-weight:bold;
+}

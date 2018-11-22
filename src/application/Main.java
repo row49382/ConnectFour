@@ -27,7 +27,7 @@ public class Main extends Application
 		try 
 		{
 			SceneManager.initialize();
-			Parent root = (Parent)FXMLLoader.load(getClass().getResource("/application/views/ManagePlayersView.fxml"));
+			Parent root = (Parent)FXMLLoader.load(getClass().getResource("/application/views/HomePageView.fxml"));
 		
 			Scene scene = new Scene(root, 470, 500);
 			primaryStage.setTitle(GAME_TITLE_NAME);

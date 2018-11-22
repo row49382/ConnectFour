@@ -3,6 +3,7 @@ package application.services;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Observable;
 
 import application.Main;
 import javafx.fxml.FXMLLoader;
@@ -10,12 +11,17 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class SceneManager 
+public class SceneManager
 {
 	public final static String BASE_VIEW_DIRECTORY = "/application/views";
 	
 	/** Holds the scenes available */
 	private static Map<String, Scene> sceneMap;
+	
+	public static Map<String, Scene> getSceneMap()
+	{
+		return sceneMap;
+	}
 	
 	public static void initialize()
 	{
