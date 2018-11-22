@@ -1,11 +1,13 @@
 package application.controllers;
 
+import java.io.IOException;
 import java.util.Observable;
 import java.util.Observer;
 
 import application.CircleButton;
 import application.models.ConnectFour;
 import application.services.PlayersManager;
+import application.services.SceneManager;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -15,6 +17,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 /**
  * Manages requests from the gui to the model
@@ -49,6 +52,10 @@ public class ConnectFourController implements EventHandler<ActionEvent>, Observe
 	/** Holds the value of the textfield that displays the game status */
 	@FXML
 	private Text banner;
+	
+	/** Holds the home button that when clicked loads the home screen */
+	@FXML
+	private Button homeButton;
 	
 	/** Holds the pointer to the game board */
 	private ConnectFour game;
@@ -145,7 +152,7 @@ public class ConnectFourController implements EventHandler<ActionEvent>, Observe
 	
 
 	/**
-	 * disables all board buttons in the  when the game is over
+	 * disables all board buttons when the game is over
 	 */
 	private void lockBoard()
 	{
@@ -214,6 +221,18 @@ public class ConnectFourController implements EventHandler<ActionEvent>, Observe
 		else if (event.getSource() == this.undoButton)
 		{
 			this.game.undoMove();
+		}
+		else if (event.getSource() == this.homeButton)
+		{
+			try 
+			{
+				SceneManager.switchScene((Stage)this.homeButton.getScene().getWindow(), "HomePageView");
+			} 
+			catch (IOException e) 
+			{
+				Alert error = new Alert(AlertType.ERROR, String.format("Error loading the file HomePageView.fxml: %s", e.getMessage()));
+				error.showAndWait();
+			}
 		}
 	}
 

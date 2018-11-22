@@ -26,10 +26,11 @@ public class Main extends Application
 	{
 		try 
 		{
-			SceneManager.initialize();
 			Parent root = (Parent)FXMLLoader.load(getClass().getResource("/application/views/HomePageView.fxml"));
-		
 			Scene scene = new Scene(root, 470, 500);
+			
+			SceneManager.initialize(scene, "HomePageView");
+			
 			primaryStage.setTitle(GAME_TITLE_NAME);
 			primaryStage.setScene(scene);
 			primaryStage.show();

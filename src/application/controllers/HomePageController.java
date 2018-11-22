@@ -38,6 +38,7 @@ public class HomePageController implements EventHandler<ActionEvent>
 		{
 			try 
 			{
+				SceneManager.removeScene("ConnectFourView");
 				SceneManager.switchScene((Stage)this.newGameButton.getScene().getWindow(), "SelectPlayersView");
 				this.loadGameButton.setDisable(false);
 			} 

@@ -59,6 +59,9 @@ public class SelectPlayersController implements EventHandler<ActionEvent>
 			PlayersManager.firstPlayer = this.firstPlayerTF.getText();
 			PlayersManager.secondPlayer = this.secondPlayerTF.getText();
 			
+			this.firstPlayerTF.clear();
+			this.secondPlayerTF.clear();
+			
 			try 
 			{
 				SceneManager.switchScene((Stage)this.loadGameButton.getScene().getWindow(), "ConnectFourView");

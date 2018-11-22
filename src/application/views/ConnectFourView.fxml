@@ -20,7 +20,7 @@
 		</AnchorPane>
 		<HBox fx:id="buttonBox" spacing="10" GridPane.columnIndex="1" GridPane.rowIndex="3">
 			<children>
-				<Button fx:id="homeButtonf" onAction="#handle"/>
+				<Button fx:id="homeButton" onAction="#handle" styleClass="homeButton" />
 				<Button fx:id="resetButton" text="Restart" onAction="#handle"/>
 				<Button fx:id="undoButton" disable="true" text="Undo" onAction="#handle"/>
 			</children>

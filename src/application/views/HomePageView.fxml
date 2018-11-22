@@ -26,7 +26,7 @@
         			</BorderPane.margin>
         			<children>
         				<Button alignment="center" fx:id="newGameButton" text="New Game" onAction="#handle" maxWidth="200"/>
-        				<Button alignment="center" fx:id="loadGameButton" text="Continue" disable="true" onAction="#handle" maxWidth="200"/>
+        				<Button alignment="center" fx:id="loadGameButton" text="Continue" onAction="#handle" maxWidth="200"/>
 					</children>
 				</VBox>
 			</center>

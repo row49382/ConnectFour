@@ -23,9 +23,10 @@ public class SceneManager
 		return sceneMap;
 	}
 	
-	public static void initialize()
+	public static void initialize(Scene scene, String file)
 	{
 		sceneMap = new HashMap<>();
+		sceneMap.put(file, scene);
 	}
 	
 	/**
@@ -45,6 +46,19 @@ public class SceneManager
 		
 		primaryStage.setScene(sceneMap.get(file));
 		primaryStage.show();
+	}
+	
+	/**
+	 * Removes a scene from the scenemap. This is used to start a new game
+	 * by removing the cached game.
+	 * @param file The file that is the key for the scene
+	 */
+	public static void removeScene(String file)
+	{
+		if(sceneMap.containsKey(file))
+		{
+			sceneMap.remove(file);
+		}
 	}
 
 }

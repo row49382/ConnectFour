@@ -18,6 +18,14 @@
 .gridPane {
 	-fx-background-color: transparent;
 }
+
+.homeButton {
+	-fx-background-image: url("Home_Icon.PNG");
+	-fx-background-size: 40px 40px;
+	-fx-min-height: 30px;
+    -fx-min-width: 40px;
+}
+
 .circleButton {
 	-fx-background-color: yellow;
 	-fx-background-radius: 5em;
