@@ -13,7 +13,7 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.paint.Color?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="400.0" fx:controller="application.controllers.ManagePlayersController" xmlns:fx="http://javafx.com/fxml/1"
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="400.0" fx:controller="application.controllers.SelectPlayersController" xmlns:fx="http://javafx.com/fxml/1"
 	stylesheets="@../resources/ManagePlayers.css">
 	<children>
 		<BorderPane layoutX="40.0" layoutY="50.0">

@@ -5,6 +5,7 @@ import java.util.Observer;
 
 import application.CircleButton;
 import application.models.ConnectFour;
+import application.services.PlayersManager;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -22,8 +23,8 @@ import javafx.scene.text.Text;
  */
 public class ConnectFourController implements EventHandler<ActionEvent>, Observer
 {
-	private final static String RED_TURN_TEXT = "It is RED Player's turn. Click a button to make a move.";
-	private final static String BLACK_TURN_TEXT = "It is BLACK Player's turn. Click a button to make a move.";
+	private static String RED_TURN_TEXT;
+	private static String BLACK_TURN_TEXT;
 		
 	/** The graphic game board of the gui */
 	@FXML
@@ -61,7 +62,10 @@ public class ConnectFourController implements EventHandler<ActionEvent>, Observe
 	@FXML
 	private void initialize()
 	{
-		this.game = new ConnectFour("R","B","-");
+		this.game = new ConnectFour("R","B","-", PlayersManager.firstPlayer, PlayersManager.secondPlayer);
+		RED_TURN_TEXT = String.format("It is %s's turn. Click a button to make a move.", this.game.getRedTokenPlayer());
+		BLACK_TURN_TEXT = String.format("It is %s's turn. Click a button to make a move.", this.game.getBlackTokenPlayer());
+		
 		this.game.addObserver(this);
 		
 		this.fillBoard();
@@ -152,6 +156,7 @@ public class ConnectFourController implements EventHandler<ActionEvent>, Observe
 				this.guiBoard[i][j].setDisable(true);
 			}
 		}
+		
 		this.undoButton.setDisable(true);
 	}
 	
@@ -185,11 +190,11 @@ public class ConnectFourController implements EventHandler<ActionEvent>, Observe
 			}
 			else if (this.game.isFirstPlayer())
 			{
-				endOfGameText.append("The winner is BLACK! ");
+				endOfGameText.append(String.format("The winner is %s! ", this.game.getBlackTokenPlayer()));
 			}
 			else
 			{
-				endOfGameText.append("The winner is RED! ");
+				endOfGameText.append(String.format("The winner is %s! ", this.game.getRedTokenPlayer()));
 			}
 			
 			endOfGameText.append("Click restart to play again..");

@@ -16,7 +16,7 @@ import tests.support.ConnectFourFactoryImpl;
  * @author Robert Wroblewski
  *
  */
-public class ConnectFourTests 
+public class ConnectFourTests
 {	
 	/** factory instance for the class that's used to create ConnectFour games in different states */
 	private static ConnectFourFactory connectFourFactory;

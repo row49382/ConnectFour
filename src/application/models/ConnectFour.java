@@ -15,6 +15,12 @@ public class ConnectFour extends Observable
 	private final int GAME_BOARD_LENGTH = 7;
 	private final int COLUMN_DEPTH = 5;
 	
+	/** The name of the red token player */
+	private String redTokenPlayer;
+	
+	/** The name of the black token player */
+	private String blackTokenPlayer;
+	
 	/** Holds the red token */
 	private String redToken;
 	
@@ -36,11 +42,22 @@ public class ConnectFour extends Observable
 	/** Holds the previous move tokenValue value*/
 	private String previousMove;
 	
-	/** Holds the column value of where the previous move was */
+	/** Holds a stack of the column value relating to where the previous move was */
 	private Stack<Integer> previousColumn;
 	
 	/**
-	 * Constructor class
+	 * Constructor
+	 */
+	public ConnectFour(String newRedToken, String newBlackToken, String newEmptyToken, String redTokenPlayer, String blackTokenPlayer)
+	{
+		this(newRedToken, newBlackToken, newEmptyToken);
+		
+		this.redTokenPlayer = redTokenPlayer;
+		this.blackTokenPlayer = blackTokenPlayer;
+	}
+	
+	/**
+	 * Constructor
 	 */
 	public ConnectFour(String newRedToken, String newBlackToken, String newEmptyToken)
 	{
@@ -54,7 +71,6 @@ public class ConnectFour extends Observable
 		this.previousMove = this.getEmptyToken();
 		this.previousColumn = new Stack<>();
 		
-		// makes the board
 		for (int i = 0; i < this.gameBoard.length; i++)
 		{
 			for (int j = 0; j < this.gameBoard[i].length; j++)
@@ -143,6 +159,24 @@ public class ConnectFour extends Observable
 	{
 		return this.previousColumn;
 	}	
+	
+	/**
+	 * Gets the red token player's name
+	 * @return The red token player's name
+	 */
+	public String getRedTokenPlayer()
+	{
+		return this.redTokenPlayer;
+	}
+	
+	/**
+	 * Gets the black token player's name
+	 * @return The black token player's name
+	 */
+	public String getBlackTokenPlayer()
+	{
+		return this.blackTokenPlayer;
+	}
 	
 	/**
 	 * Checks to see if the token connects four diagonally

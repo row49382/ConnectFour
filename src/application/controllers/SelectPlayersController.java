@@ -2,6 +2,7 @@ package application.controllers;
 
 import java.io.IOException;
 
+import application.services.PlayersManager;
 import application.services.SceneManager;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -16,7 +17,7 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
-public class ManagePlayersController implements EventHandler<ActionEvent>
+public class SelectPlayersController implements EventHandler<ActionEvent>
 {
 	/** text that is displayed when both player textfields are empty */
 	private static final String LOAD_GAME_TEXT = "Game cannot be started until both player names are set*";
@@ -55,6 +56,9 @@ public class ManagePlayersController implements EventHandler<ActionEvent>
 	{
 		if (event.getSource() == this.loadGameButton)
 		{
+			PlayersManager.firstPlayer = this.firstPlayerTF.getText();
+			PlayersManager.secondPlayer = this.secondPlayerTF.getText();
+			
 			try 
 			{
 				SceneManager.switchScene((Stage)this.loadGameButton.getScene().getWindow(), "ConnectFourView");

@@ -13,7 +13,7 @@ public class ConnectFourFactoryImpl implements ConnectFourFactory
 	@Override
 	public ConnectFour getConnectFourEntity(ConnectFourGameboardState gameBoardType) throws Exception
 	{
-		ConnectFour game = new ConnectFour("R", "B", "-");
+		ConnectFour game = new ConnectFour("R", "B", "-", "red", "black");
 		switch (gameBoardType)
 		{
 			case HorizonalWin:
@@ -34,7 +34,7 @@ public class ConnectFourFactoryImpl implements ConnectFourFactory
 			default:
 				break;
 		}
-
+		
 		return game;	
 	}
 
