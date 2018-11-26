@@ -170,12 +170,30 @@ public class ConnectFour extends Observable
 	}
 	
 	/**
+	 * Sets the red token player's name
+	 * @param redTokenPlayer The red token player's name
+	 */
+	public void setRedTokenPlayer(String redTokenPlayer)
+	{
+		this.redTokenPlayer = redTokenPlayer;
+	}
+	
+	/**
 	 * Gets the black token player's name
 	 * @return The black token player's name
 	 */
 	public String getBlackTokenPlayer()
 	{
 		return this.blackTokenPlayer;
+	}
+	
+	/**
+	 * Sets the black token player's name
+	 * @param blackTokenPlayer The black token player's name
+	 */
+	public void setBlackTokenPlayer(String blackTokenPlayer)
+	{
+		this.blackTokenPlayer = blackTokenPlayer;
 	}
 	
 	/**

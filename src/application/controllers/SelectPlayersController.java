@@ -2,11 +2,11 @@ package application.controllers;
 
 import java.io.IOException;
 
-import application.services.PlayersManager;
 import application.services.SceneManager;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -56,19 +56,19 @@ public class SelectPlayersController implements EventHandler<ActionEvent>
 	{
 		if (event.getSource() == this.loadGameButton)
 		{
-			PlayersManager.firstPlayer = this.firstPlayerTF.getText();
-			PlayersManager.secondPlayer = this.secondPlayerTF.getText();
+			String firstPlayer = this.firstPlayerTF.getText();
+			String secondPlayer = this.secondPlayerTF.getText();
 			
 			this.firstPlayerTF.clear();
 			this.secondPlayerTF.clear();
 			
 			try 
 			{
-				SceneManager.switchScene((Stage)this.loadGameButton.getScene().getWindow(), "ConnectFourView");
+				SceneManager.switchScene((Stage)this.loadGameButton.getScene().getWindow(), "ConnectFourView", firstPlayer, secondPlayer);
 			} 
 			catch (IOException e) 
 			{
-				Alert error = new Alert(AlertType.ERROR, String.format("Error loading the file MangePlayersView.fxml: %s", e.getMessage()));
+				Alert error = new Alert(AlertType.ERROR, String.format("Error loading the file ConnectFourView.fxml: %s", e.getMessage()));
 				error.showAndWait();
 			}
 		}	

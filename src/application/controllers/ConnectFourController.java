@@ -6,7 +6,6 @@ import java.util.Observer;
 
 import application.CircleButton;
 import application.models.ConnectFour;
-import application.services.PlayersManager;
 import application.services.SceneManager;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -69,15 +68,28 @@ public class ConnectFourController implements EventHandler<ActionEvent>, Observe
 	@FXML
 	private void initialize()
 	{
-		this.game = new ConnectFour("R","B","-", PlayersManager.firstPlayer, PlayersManager.secondPlayer);
+		this.game = new ConnectFour("R","B","-");
+		this.game.addObserver(this);
+		
+		this.currentColumn = -1;
+		this.fillBoard();
+		
+	}
+	
+	/**
+	 * Populates the player names for the game
+	 * @param firstPlayer The first player name
+	 * @param secondPlayer The second player name
+	 */
+	public void populatePlayerNames(String firstPlayer, String secondPlayer)
+	{
+		this.game.setRedTokenPlayer(firstPlayer);
+		this.game.setBlackTokenPlayer(secondPlayer);
+		
 		RED_TURN_TEXT = String.format("It is %s's turn. Click a button to make a move.", this.game.getRedTokenPlayer());
 		BLACK_TURN_TEXT = String.format("It is %s's turn. Click a button to make a move.", this.game.getBlackTokenPlayer());
 		
-		this.game.addObserver(this);
-		
-		this.fillBoard();
 		this.banner.setText(RED_TURN_TEXT);
-		this.currentColumn = -1;
 	}
 	
 	/**
